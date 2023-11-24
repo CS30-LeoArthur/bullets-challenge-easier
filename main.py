@@ -87,6 +87,7 @@ def main():
 
     # Player
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, 50, 50, 0, 0)
+    
     # Screen
     size = (SCREEN_WIDTH, SCREEN_HEIGHT)
     screen = pygame.display.set_mode(size)
@@ -118,21 +119,26 @@ def main():
         random_colour = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
         if frameCount % 120 == 0:
             random_circles.append(Circle(random.randrange(0, SCREEN_WIDTH - circle_width), random.randrange(0, 550), circle_width, circle_height, random_colour, random.randrange(1, 5), random.randrange(1, 5), 2))
+        
         # move circles
         for i in range(len(random_circles)):
             random_circles[i].update()
             random_circles[i].edge_collision()
+        
         # move bullets
         for i in range(len(bullets)):
             bullets[i].update()
+        
         # Check bullet and random circle collision
         if check_collision(bullets, random_circles) != -1:
             print(check_collision(bullets, random_circles))
             random_circles.pop(check_collision(bullets, random_circles))
+        
         # Remove bullets when at the top of the screen
         for i in range(len(bullets)):
             if bullets[i].y < 0:
                 bullets.pop(i)
+                break
         # move player
         player.update()
         print(len(bullets))
