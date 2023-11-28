@@ -107,8 +107,10 @@ def main():
                 elif event.key == pygame.K_d:
                     player.go_right()
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_a and player.change_x < 0 or event.key == pygame.K_d and player.change_x > 0:
-                    player.hzstop
+                if event.key == pygame.K_a and player.change_x < 0:
+                    player.hzstop()
+                elif event.key == event.key == pygame.K_d and player.change_x > 0:
+                    player.hzstop()
             # When I click the mouse I make a new bullet
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 bullets.append(Circle(player.x + (player.width / 2.5), player.y, 10, 10, WHITE, 0, -10, 0))
@@ -133,6 +135,7 @@ def main():
         if check_collision(bullets, random_circles) != -1:
             print(check_collision(bullets, random_circles))
             random_circles.pop(check_collision(bullets, random_circles))
+            bullets.pop(check_collision(random_circles, bullets))
         
         # Remove bullets when at the top of the screen
         for i in range(len(bullets)):
@@ -141,7 +144,6 @@ def main():
                 break
         # move player
         player.update()
-        print(len(bullets))
 
     # Drawing
         screen.fill(DARK_GREY)
